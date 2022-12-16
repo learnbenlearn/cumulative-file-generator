@@ -42,7 +42,7 @@ async function configureLocalRepo() {
 }
 
 async function generateNewCumulativeFiles() {
-    const {stdout, stderr} = await exec(`git diff HEAD^ --name-only`);
+    const {stdout, stderr} = await exec(`git diff HEAD^ --diff-filter=d --name-only`);
     if(stderr) {
         fatal('generateNewCumulativeFile()', stderr);
     }
@@ -77,17 +77,36 @@ async function generateNewCumulativeFiles() {
 }
 
 function writeCumulativeFile(topic) {
-    const prerequisitesLearningObjectives = fs.readFileSync(
+  /*  let prerequisitesLearningObjectives = fs.readFileSync(
         `${topic}${process.env.FILE_PATH_DELIMITER}${process.env.PREREQUISITES_LEARNING_OBJECTIVES_FILENAME}`, 
         {encoding: 'utf-8'}
     );
-    const description = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.DESCRIPTION_FILENAME}`, {encoding: 'utf-8'});
-    const realWorldApplication = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.REAL_WORLD_APPLICATION_FILENAME}`, {encoding: 'utf-8'});
-    const implementation = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.IMPLEMENTATION_FILENAME}`, {encoding: 'utf-8'});
-    const summary = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.SUMMARY_FILENAME}`, {encoding: 'utf-8'});
+    let description = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.DESCRIPTION_FILENAME}`, {encoding: 'utf-8'});
+    let summary = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.SUMMARY_FILENAME}`, {encoding: 'utf-8'});
+*/
+    let realWorldApplication;
+    let implementation; 
+    try {
+        realWorldApplication = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.REAL_WORLD_APPLICATION_FILENAME}`, {encoding: 'utf-8'});
+    } catch(err) {
+        if(err.message.includes(process.env.NONEXISTENT_FILE_ERROR_MESSAGE)) {
+            realWorldApplication = process.env.DEFAULT_FILE_CONTENTS;
+        } else {
+            throw err;
+        }
+    }
+    try {
+        implementation = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.IMPLEMENTATION_FILENAME}`, {encoding: 'utf-8'});
+    } catch(err) {
+        if(err.message.includes(process.env.NONEXISTENT_FILE_ERROR_MESSAGE)) {
+            implementation = process.env.DEFAULT_FILE_CONTENTS;
+        } else {
+            throw err;
+        }
+    }
     
     let topicFolderName = topic.slice(topic.lastIndexOf('/') + 1);
-    let topicName = topicFolderName.replaceAll('-', ' ')
+    let topicName = topicFolderName.replaceAll('-', ' ');
     fs.writeFileSync(
         `${topic}${process.env.FILE_PATH_DELIMITER}${process.env.CUMULATIVE_FILENAME}`,
         `# Cumulative for ${properCase(topicName)}
@@ -155,3 +174,5 @@ function changeToProjectDirectory(projectName) {
 module.exports = {
     orchestrate
 }
+
+writeCumulativeFile('./');
