@@ -68,6 +68,9 @@ async function generateNewCumulativeFiles() {
             updatedTopics.add(
                 `${process.env.MODULE_PATH_PREFIX}${process.env.FILE_PATH_DELIMITER}${moduleFolderName}${process.env.FILE_PATH_DELIMITER}${topicFolderName}`
             );
+            console.log(moduleFolderName);
+            console.log(topicFolderName);
+            console.log(changedFile);
             console.log(`${process.env.MODULE_PATH_PREFIX}${process.env.FILE_PATH_DELIMITER}${moduleFolderName}${process.env.FILE_PATH_DELIMITER}${topicFolderName}`)
         }
     }
