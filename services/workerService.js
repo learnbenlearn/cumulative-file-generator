@@ -77,13 +77,13 @@ async function generateNewCumulativeFiles() {
 }
 
 function writeCumulativeFile(topic) {
-  /*  let prerequisitesLearningObjectives = fs.readFileSync(
+    let prerequisitesLearningObjectives = fs.readFileSync(
         `${topic}${process.env.FILE_PATH_DELIMITER}${process.env.PREREQUISITES_LEARNING_OBJECTIVES_FILENAME}`, 
         {encoding: 'utf-8'}
     );
     let description = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.DESCRIPTION_FILENAME}`, {encoding: 'utf-8'});
     let summary = fs.readFileSync(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.SUMMARY_FILENAME}`, {encoding: 'utf-8'});
-*/
+
     let realWorldApplication;
     let implementation; 
     try {
