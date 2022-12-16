@@ -77,6 +77,7 @@ async function generateNewCumulativeFiles() {
 }
 
 function writeCumulativeFile(topic) {
+    console.log(`${topic}${process.env.FILE_PATH_DELIMITER}${process.env.PREREQUISITES_LEARNING_OBJECTIVES_FILENAME}`)
     let prerequisitesLearningObjectives = fs.readFileSync(
         `${topic}${process.env.FILE_PATH_DELIMITER}${process.env.PREREQUISITES_LEARNING_OBJECTIVES_FILENAME}`, 
         {encoding: 'utf-8'}
