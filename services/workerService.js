@@ -179,5 +179,3 @@ function changeToProjectDirectory(projectName) {
 module.exports = {
     orchestrate
 }
-
-writeCumulativeFile('./');
